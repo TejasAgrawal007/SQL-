@@ -1,0 +1,51 @@
+select first_name,email from employees;
+
+CREATE DATABASE company;
+USE company;
+
+CREATE TABLE employees (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    department VARCHAR(50),
+    salary DECIMAL(10,2),
+    hire_date DATE
+);
+
+INSERT INTO employees (first_name, last_name, department, salary, hire_date) VALUES
+('John', 'Doe', 'HR', 60000.00, '2022-05-10'),
+('Jane', 'Smith', 'IT', 75000.00, '2021-08-15'),
+('Alice', 'Johnson', 'Finance', 82000.00, '2019-03-20'),
+('Bob', 'Williams', 'IT', 72000.00, '2020-11-25'),
+('Charlie', 'Brown', 'Marketing', 65000.00, '2023-01-05');
+
+SELECT * FROM employees;
+
+SELECT first_name as 'First Name' , last_name, department FROM employees;
+
+SELECT * FROM employees where department="IT" ORDER BY SALARY DESC limit 1;
+
+SELECT * FROM EMPLOYEES limit 2;
+
+select distinct department FROM EMPLOYEES;
+
+SELECT first_name,last_name,salary*1.1 as 'Salary After Raise' FROM EMPLOYEES;
+
+select concat(first_name, ' ', last_name) as 'Full Name', year(hire_date), ROUND(salary,1) FROM EMPLOYEES WHERE salary > 70000 ;
+
+select AVG(salary) from employees;
+
+SELECT * FROM employees WHERE SALARY > (select AVG(salary) from employees);
+
+SELECT first_name, last_name FROM employees WHERE department = 'IT' UNION
+SELECT first_name, last_name FROM employees WHERE department = 'HR';
+
+select count(*), department from employees group by department;
+
+select NOW() as 'time';
+
+select 5 * 2;
+
+SELECT LENGTH('hello');
+
+SELECT 5 < 3;

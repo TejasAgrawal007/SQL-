@@ -57,3 +57,20 @@ INSERT INTO payments VALUES
 (201, 1, 50.00, '2024-05-05'),
 (202, 2, 45.00, '2024-05-05'),
 (203, 3, 60.00, '2024-05-06');
+
+
+
+-- 1. Who had the longest session duration?
+
+select name, session_type,
+	timestampdiff(MINUTE, start_time, end_time) as duration_min
+from members m 
+join sessions s 
+on m.member_id = s.member_id
+where timestampdiff(MINUTE, start_time, end_time) = (
+	select max(timestampdiff(MINUTE, start_time, end_time))
+);
+
+
+
+

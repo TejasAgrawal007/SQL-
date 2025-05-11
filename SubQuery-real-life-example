@@ -1,0 +1,59 @@
+-- Drop if exists (for fresh setup)
+DROP TABLE IF EXISTS payments, checkins, sessions, members;
+
+-- Members table
+CREATE TABLE members (
+    member_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    join_date DATE
+);
+
+-- Sessions table
+CREATE TABLE sessions (
+    session_id INT PRIMARY KEY,
+    member_id INT,
+    session_type VARCHAR(50),
+    start_time DATETIME,
+    end_time DATETIME,
+    FOREIGN KEY (member_id) REFERENCES members(member_id)
+);
+
+-- Check-ins table
+CREATE TABLE checkins (
+    checkin_id INT PRIMARY KEY,
+    member_id INT,
+    checkin_time DATETIME,
+    FOREIGN KEY (member_id) REFERENCES members(member_id)
+);
+
+-- Payments table
+CREATE TABLE payments (
+    payment_id INT PRIMARY KEY,
+    member_id INT,
+    amount DECIMAL(10, 2),
+    payment_date DATE,
+    FOREIGN KEY (member_id) REFERENCES members(member_id)
+);
+
+-- Sample Data
+INSERT INTO members VALUES 
+(1, 'Alice', '2024-01-10'),
+(2, 'Bob', '2024-02-15'),
+(3, 'Charlie', '2024-03-05');
+
+INSERT INTO sessions VALUES 
+(101, 1, 'Yoga', '2024-05-01 09:00:00', '2024-05-01 10:00:00'),
+(102, 2, 'Cardio', '2024-05-01 10:30:00', '2024-05-01 11:30:00'),
+(103, 3, 'Weights', '2024-05-02 17:00:00', '2024-05-02 18:00:00'),
+(104, 1, 'Yoga', '2024-05-03 09:00:00', '2024-05-03 10:00:00');
+
+INSERT INTO checkins VALUES 
+(1001, 1, '2024-05-01 08:55:00'),
+(1002, 2, '2024-05-01 10:25:00'),
+(1003, 3, '2024-05-02 16:55:00'),
+(1004, 1, '2024-05-03 08:50:00');
+
+INSERT INTO payments VALUES 
+(201, 1, 50.00, '2024-05-05'),
+(202, 2, 45.00, '2024-05-05'),
+(203, 3, 60.00, '2024-05-06');

@@ -96,3 +96,14 @@ where join_date = (
     from members 
 );
 
+-- ✅ 4. Which members made a payment greater than the average payment?
+-- Use a scalar subquery in a comparison.
+
+select name 
+from members m 
+join payments p 
+on m.member_id = p.member_id
+where p.amount > (
+	select avg(amount) 
+    from payments
+);

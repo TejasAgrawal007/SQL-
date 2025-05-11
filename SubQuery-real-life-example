@@ -86,3 +86,13 @@ WHERE member_id IN (
 );
 
 
+-- ✅ 3. Who joined first?
+-- Use a scalar subquery with =.
+
+select name 
+from members
+where join_date = (
+	select min(join_date) 
+    from members 
+);
+

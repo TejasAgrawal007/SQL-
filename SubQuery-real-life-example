@@ -72,5 +72,17 @@ where timestampdiff(MINUTE, start_time, end_time) = (
 );
 
 
+-- 2. Which members checked in more than once in the last 7 days?
+
+
+SELECT name, member_id
+FROM members
+WHERE member_id IN (
+    SELECT member_id
+    FROM checkins
+    WHERE checkin_time >= NOW() - INTERVAL 7 DAY
+    GROUP BY member_id
+    HAVING COUNT(*) > 1
+);
 
 

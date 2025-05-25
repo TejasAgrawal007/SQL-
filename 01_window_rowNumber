@@ -1,0 +1,65 @@
+-- 🔹 Q1. Assign a row number to each employee based on their salary (highest first).
+-- 📌 Explanation: This gives a unique number to each employee based on salary, highest first.
+
+
+select * 
+from employees;
+
+select 
+	id,
+    first_name,
+    salary,
+    row_number() over(order by salary) as row_num
+from employees;
+
+
+-- Q2. Assign a row number to each employee ordered by hire date (oldest first).
+-- 📌 Explanation: Useful to see who joined the company first.
+
+
+select 
+	id,
+    first_name,
+    department, 
+    salary,
+    row_number() over(order by hire_date) as row_num
+from employees;
+
+
+-- 🔹 Q3. Assign a row number within each department based on salary.
+-- 📌 Explanation: Numbers are reset for each department and ordered by highest salary.
+
+select
+	id,
+    first_name,
+    department,
+    salary,
+    row_number() over(partition by department order by salary) as row_num
+from employees;
+
+
+-- 🔹 Q4. Show all employees along with their row number, ordered alphabetically by name.
+-- 📌 Explanation: Good for understanding alphabetical ordering using ROW_NUMBER().
+
+select
+	id,
+    first_name,
+    row_number() over(order by first_name asc) as row_num
+from employees;
+
+-- 🔹 Q5. Add row numbers to the employee list without any ordering (just to practice syntax).
+-- 📌 Explanation: Not recommended in real use (no ORDER BY), but shows how syntax works.
+
+select
+	id,
+    first_name,
+    row_number() over() as row_num
+from employees;
+
+
+
+
+
+
+
+

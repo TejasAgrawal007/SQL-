@@ -57,9 +57,68 @@ select
 from employees;
 
 
+-- 💪 Tougher SQL ROW_NUMBER() Questions (with Answers & Explanations)
+
+-- Q1. Find the highest-paid employee in each department whose 
+-- salary is greater than the department’s average.
+
+-- 📌 Explanation: Combines ROW_NUMBER() and AVG() in the same query. 
+-- Filters top 1 salary per department, but only if above average.
+
+
+with ranked as (
+	select *, 
+		row_number() over (partition by department order by salary desc) as rn,
+		avg(salary) over (partition by department) as avg_salary
+	from employees
+)
+
+
+select id, first_name, department, salary
+from ranked
+where rn = 1 and salary > avg_salary;
+
+
+-- 🔹 Q2. Get the latest hired employee for each department.
+-- 📌 Explanation: ROW_NUMBER() sorts by latest hire_date per department to pick the most recent hire.
+
+with Ranked as 
+(
+		select *,
+			row_number() over(partition by department order by hire_date desc) as rn
+        from employees
+)
+
+select *
+from Ranked
+where rn = 1;
+
+
+-- Q3. Remove duplicate employee names, keeping only the one with the highest salary (assume names can repeat).
+-- 📌 Explanation: Handles deduplication by keeping the highest-paid version of each name.
+
+with result as (
+	select *,
+		row_number() over(partition by first_name order by salary desc) as rn
+		from employees
+)
+
+select *
+from result
+where rn = 1;
 
 
 
+-- 🔹 Q4. Get top 2 employees per department by salary.
+-- 📌 Explanation: Classic top-N per group query using ROW_NUMBER().
 
+with result as (
+select *,
+	row_number() over(partition by department order by salary desc) as rn
+    from employees
+)
+select id, first_name, department, salary
+from result
+where rn <= 2;
 
 

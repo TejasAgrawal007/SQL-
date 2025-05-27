@@ -1,0 +1,36 @@
+-- Create 'users' table
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    full_name VARCHAR(100),
+    email VARCHAR(100),
+    phone_number VARCHAR(20),
+    username VARCHAR(50)
+);
+
+-- Insert sample data
+INSERT INTO users (id, full_name, email, phone_number, username) VALUES
+(1, 'Alice Johnson', 'alice.j@gmail.com', '+1-555-123-4567', 'alice_j'),
+(2, 'Bob Smith', 'bob.smith@yahoo.com', '+91-9876543210', 'bob_1985'),
+(3, 'Charlie King', 'charlie.k@company.co.uk', '+44-777-1234', 'charlieK'),
+(4, 'David Gray', 'david.gray123@gmail.com', '+1-123-456-7890', 'gray.d'),
+(5, 'Eve Adams', 'eve_adams123@domain.net', '123-456-7890', 'eve123');
+
+-- 1. Find users whose email ends with 'gmail.com'
+SELECT * FROM users
+WHERE email REGEXP 'gmail\\.com$';
+
+-- 2. Get all users whose username contains only lowercase letters and underscores
+SELECT * FROM users
+WHERE username REGEXP '^[a-z_]+$';
+
+-- 3. Find users whose phone numbers start with a country code (+)
+SELECT * FROM users
+WHERE phone_number REGEXP '^\\+[0-9]+';
+
+-- 4. Find users whose full name is title case (first and last name)
+SELECT * FROM users
+WHERE full_name REGEXP '^[A-Z][a-z]+ [A-Z][a-z]+$';
+
+-- 5. List users whose email contains any digits
+SELECT * FROM users
+WHERE email REGEXP '[0-9]';
